@@ -1,179 +1,88 @@
 # Project 2 - Ames Housing Data and Kaggle Challenge
 
-Welcome to Project 2! It's time to start modeling.
+---
 
-**Primary Learning Objectives:**
-1. Creating and iteratively refining a regression model
-2. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
-3. Providing business insights through reporting and presentation.
+## Project Challenge Statement
 
-You are tasked with creating a regression model based on the Ames Housing Dataset. This model will predict the price of a house at sale.
+### Goal: Predict the price of homes at sale for the Aimes Iowa Housing dataset. 
 
-The Ames Housing Dataset is an exceptionally detailed and robust dataset with over 70 columns of different features relating to houses.
+Two files are provided to build the model. 
 
-Secondly, we are hosting a competition on Kaggle to give you the opportunity to practice the following skills:
+- train.csv -- this data contains all of the training data for your model.
+The target variable (SalePrice) is removed from the test set!
+- test.csv -- this data contains the test data for your model. You will feed this data into your regression model to make predictions.
 
-- Refining models over time
-- Use of train-test split, cross-validation, and data with unknown values for the target to simulate the modeling process
-- The use of Kaggle as a place to practice data science
+## Table of Contents
 
-As always, you will be submitting a technical report and a presentation. **You may find that the best model for Kaggle is not the best model to address your data science problem.**
+This Notebook is broken down into different sections for analysis purpose. The following links are connected to different section within the Notebook for simple navigation.
 
-## Set-up
+### Contents 
 
-Before you begin working on this project, please do the following:
-
-1. Sign up for an account on [Kaggle](https://www.kaggle.com/)
-2. **IMPORTANT**: Click this link ([Regression Challenge Sign Up](https://www.kaggle.com/t/164741a8c2db48cfb2dafff0746ab2ac)) to **join** the competition (otherwise you will not be able to make submissions!)
-3. Review the material on the [DSI-US-7 Regression Challenge](https://www.kaggle.com/c/dsi-us-7-project-2-regression-challenge)
-4. Review the [data description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt).
+- [01_EDA_And_Data_Cleaning](https://git.generalassemb.ly/evolevelynli/project_2/blob/master/code/01_EDA_And_Data_Cleaning%20.ipynb) 
+- [02_Data_Preprocessing](https://git.generalassemb.ly/evolevelynli/project_2/blob/master/code/02_Data_Preprocessing.ipynb) 
+- [03_Model_Benchmarks](https://git.generalassemb.ly/evolevelynli/project_2/blob/master/code/03_Model_Benchmarks.ipynb) 
+- [04_Model_Tuning](https://git.generalassemb.ly/evolevelynli/project_2/blob/master/code/04_Model_Tuning.ipynb)
+- [05_Production_Model_and_Insights](https://git.generalassemb.ly/evolevelynli/project_2/blob/master/code/05_Production_Model_and_Insights.ipynb)
 
 ## The Modeling Process
 
-1. The train dataset has all of the columns that you will need to generate and refine your models. The test dataset has all of those columns except for the target that you are trying to predict in your Regression model.
-2. Generate your regression model using the training data. We expect that within this process, you'll be making use of:
-    - train-test split
-    - cross-validation / grid searching for hyperparameters
-    - strong exploratory data analysis to question correlation and relationship across predictive variables
-    - code that reproducibly and consistently applies feature transformation (such as the preprocessing library)
-3. Predict the values for your target column in the test dataset and submit your predictions to Kaggle to see how your model does against unknown data.
-    - **Note**: Kaggle expects to see your submissions in a specific format. Check the challenge's page to make sure you are formatting your CSVs correctly!
-    - **You are limited to models you've learned in class**. In other words, you cannot use XGBoost, Neural Networks or any other advanced model for this project.
-4. Evaluate your models!
-    - consider your evaluation metrics
-    - consider your baseline score
-    - how can your model be used for inference?
-    - why do you believe your model will generalize to new data?
+1. EDA and Data Cleaning
+    - Sale Price Trend
+    - 42 Categorical Features and 39 Numerical Features
+    - Numeric null -> mean, Categorical Null -> None
+2. Numerical Features Extraction
+    - Run Linear Regression with all numeric features
+    - Select the ones with p-values less than 0.05
+3. Bench Mark Models (dummies and selected numerical features, polynomial transformation, standardization of X)
+    - Linear Regression
+    - Ridge Regression
+    - Lasso Regression
+    - Elastic Net Regression
+4. Model Tuning (dummies and selected numerical features, polynomial transformation, standardization of X and Y)
+    - Key Features Selection
+5. Select variables with high coefficients in Lasso Model
+    - Run Linear Regression with selected variables and extract the features with p-value < 0.05
 
-## Submission
+## Key Variables For Predicting Sale Price 
 
-Materials must be submitted by the beginning of class on **Monday, March 25**.
+- 2nd Flr SF                            
+- Overall Qual Year Built               
+- Overall Qual                          
+- Lot Frontage Screen Porch             
+- 1st Flr SF                            
+- 2nd Flr SF Neighborhood_StoneBr       
+- 2nd Flr SF Garage Cond_Ex             
+- Lot Area Overall Cond                 
+- Total Bsmt SF Neighborhood_StoneBr    
+- BsmtFin SF 1 Total Bsmt SF            
+- Year Built                            
+- Overall Cond Neighborhood_StoneBr     
+- BsmtFin SF 1 Neighborhood_OldTown     
+- Year Built Bedroom AbvGr              
+- Total Bsmt SF Garage Area             
+- Total Bsmt SF Neighborhood_NridgHt    
+- Lot Frontage Lot Area                 
+- BsmtFin SF 1 Neighborhood_NoRidge     
+- Neighborhood_Sawyer                   
+- Bedroom AbvGr Neighborhood_NridgHt    
+- Overall Cond Exterior 1st_BrkFace     
+- 1st Flr SF Neighborhood_NAmes         
+- 1st Flr SF Neighborhood_NoRidge       
+- Mas Vnr Area 2nd Flr SF               
+- Overall Qual Neighborhood_Sawyer      
+- Lot Area                              
+- Overall Cond Neighborhood_NridgHt     
+- Lot Area Year Built                   
+- Lot Frontage Bedroom AbvGr            
+- 1st Flr SF Neighborhood_Sawyer        
 
-The last day for the Kaggle compeititon will be **Friday, March 22**.
 
-Your technical report will be hosted on Github Enterprise. Make sure it includes:
+## Recommendation
 
-- A README.md (that isn't this file)
-- Jupyter notebook(s) with your analysis and models (renamed to describe your project)
-- At least one successful prediction submission on [DSI-US-7 Regression Challenge](https://www.kaggle.com/c/dsi-us-7-project-2-regression-challenge) --  you should see your name in the "[Leaderboard](https://www.kaggle.com/c/dsi-us-7-project-2-regression-challenge/leaderboard)" tab.
-- Data files
-- Presentation slides
-- Any other necessary files (images, etc.)
+According to our analysis, there are few variables have a significantly high positive correlation with the Sale Price of one's house. First is the overall condition of the house. The p-value of an overall condition variable is less than 0.05 which means we will reject the null hypothesis of saying there is no relationship between overall condition and sale price. As the overall condition of the house increases, the sale price of the house increase as well. Meanwhile, Lot area, Lot Frontage Lot Area, square foot first and second floor of the house also have a high correlation with the Sale Price. In other words, the larger the space of the home is, the higher the sale price will be. Another essential feature that contributes to an increase in sale price is overall quality with year built. If a house is built recently, and the quality of the house is good, the sale price of the home will be higher. 
 
-**Check with your local instructor for how they would like you to submit your repo for review.**
+Within the features that have low p-values, few variables such as 2nd Flr SF Neighborhood_StoneBr, Total Bsmt SF Neighborhood_NridgHt, Overall Qual Neighborhood_Sawyer, and Total Bsmt SF Neighborhood_NWAmes point us to the direction of understanding the importance of location. Especially variable Neighborhood_Sawyer, which has a positive correlation with Sale Price, means that if your house is in this neighborhood, the Sale Price of the home will go up. Another interesting thing to notice for these interaction variables is that some specific house features in different locations can boost the sale value of a home if the home fulfills both qualities. For example, the interaction term 2nd_Flr_SF_Neighborhood_StoneBr means that the house has a second floor and its location is in Stone Brook. The way we can interpret this variable that if a home locates at Stony Brook, as the square footage of the home's second-floor increases, the sale price increases as well. 
 
----
+As for the features that decrease the Sale Price of the house, One interaction term caught my eye: Lot_Frontage_Bedroom_AbvGr, which is an interaction term between Lot Frontage and number of bedrooms above ground. This interaction term is significant and has a negative relationship with the Sale Price. However, we can't draw any conclusion about lot frontage and bedroom only base on this one variable. This negative relationship between the interaction term and sale price could be compensation to adjust the real relationship between variables since both Lot Frontage and Bedroom above ground have a positive correlation with the sale price. From this variable, we can say that some of the variables in the regression model are not quite explanatory on its own. 
 
-## Presentation Structure
-
-- **Must be within time limit established by local instructor.**
-- Use Google Slides or some other visual aid (Keynote, Powerpoint, etc).
-- Consider the audience. **Check with your local instructor for direction**.
-- Start with the **data science problem**.
-- Use visuals that are appropriately scaled and interpretable.
-- Talk about your procedure/methodology (high level).
-- Talk about your primary findings.
-- Make sure you provide **clear recommendations** that follow logically from your analyses and narrative and answer your data science problem.
-
-Be sure to rehearse and time your presentation before class.
-
----
-
-## Rubric
-Your local instructor will evaluate your project (for the most part) using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
-
-**Scores will be out of 27 points based on the 9 items in the rubric.** <br>
-*3 points per section*<br>
-
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the outlined expectations; many major issues exist.* |
-| **1** | *Project close to meeting expectations; many minor issues or a few major issues.* |
-| **2** | *Project meets expectations; few (and relatively minor) mistakes.* |
-| **3** | *Project demonstrates a thorough understanding of all of the considerations outlined.* |
-
-### The Data Science Process
-
-**Problem Statement**
-- Is it clear what the student plans to do?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
-
-**Data Cleaning and EDA**
-- Are missing values imputed appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
-
-**Preprocessing and Modeling**
-- Are categorical variables one-hot encoded?
-- Does the student investigate or manufacture features with linear relationships to the target?
-- Have the data been scaled appropriately?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student utilize feature selection to remove noisy or multi-collinear features?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** linear regression, lasso, and ridge)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
-
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Is more than one metric utilized in order to better assess performance?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
-
-### Organization and Professionalism
-
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
-
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
-
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` methods used appropriately?
-
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
-
-### REMEMBER:
-
-This is a learning environment and you are encouraged to try new things, even if they end up failing. While this rubric outlines what we look for in a _good_ project, it is up to you to go above and beyond to create a _great_ project. **Learn from your failures and you'll be prepared to succeed in the workforce**.
+Based on the analysis above, we will provide the following business recommendation for those who are interested in boosting their house sale price. First, homeowners must understand the importance of location.  Some neighborhoods are better than others thus have a higher value on their homes. If one is interested in raising housing value in a particular neighborhood, we can perform further analysis by extracting information based on the specific area to understand what are some of the key features that contribute to sale price in this particular neighborhood. However, for everyone else who already has a house and looking forward to improving the sale price regardless of location, there are things you can do. If your home has a second floor, this feature only will add value to your sale price. If you do not have a second floor, there are ways for you to improve profits by improving the overall condition of your house. Depends on the status of the house, there are a variety of things you can do to increase the value of your home quickly. Before selling the home, homeowners should identify the area in the house that needs fixing up and fix up the part that will give the house the most significant value boost. For example, painting your walls will not cost you so much, but it will increase the value of the home significantly because your house now will look cleaner and newer than before. After all, the quality of the house is crucial for buyers.  
